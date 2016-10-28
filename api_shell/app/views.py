@@ -49,8 +49,8 @@ def spotify(input):
 	tracks = json.loads(topAlbumResponse)['tracks']
 	string = ""
 	for i in xrange(len(tracks)):
-		string += tracks[i]["name"]
-	return tracks
+		string += tracks[i]["name"] + ", "
+	return string
 
 	albums = []
 	for album in albumIn:
