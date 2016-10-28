@@ -29,27 +29,36 @@ def getArtist():
 		return "Bad request"
 
 def wiki(input):
-	url = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles="+input
+	url = "https://en.wikipedia.org/w/api.php?action=opensearch&search=" + input + "&limit=1&namespace=0&format=json"
 	searchRequest = urllib2.Request(url)
 	response = urllib2.urlopen(searchRequest).read()
 	wikiJson = json.loads(response)
-	for key in wikiJson["query"]["pages"]:
-		return wikiJson["query"]["pages"][key]["extract"]
+	#for key in wikiJson["query"]["pages"]:
+	try:
+		return wikiJson[2][0]
+		#return wikiJson["query"]#["pages"][key]#["extract"]
+	except Exception as e:
+		return str(e)
 
 
 def spotify(input):
  	artistResponse = urllib2.urlopen("https://api.spotify.com/v1/search?q=" + input+ "&type=artist").read()
 	artistJson = json.loads(artistResponse)
 	id = str(artistJson['artists']['items'][0]["id"])
-	topAlbumResponse = urllib2.urlopen("https://api.spotify.com/v1/artists/"+ id+ "/albums").read()
-	#return str(json.loads(topAlbumResponse)['items'][0]['name'])
+	topAlbumResponse = urllib2.urlopen("https://api.spotify.com/v1/artists/"+id+"/top-tracks?country=US").read()
+	tracks = json.loads(topAlbumResponse)['tracks']
+	string = ""
+	for i in xrange(len(tracks)):
+		string += tracks[i]["name"]
+	return tracks
+
 	albums = []
-	for album in json.loads(topAlbumResponse)['items']:
+	for album in albumIn:
 		albums.append(album['name'])
 	string = "" 
-	for title in albums:
-		string += title +", "
-		return string
+	for i in xrange(len(albums)):
+		string += albums[i] +", "
+	return string
 
 def twitter(input):
 	consumerKey = "P66GTF3aYSQQYdQRg56N3H9Ms"
