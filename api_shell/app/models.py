@@ -4,6 +4,7 @@ import base64
 import urllib2,urllib
 class twitter:
     """the twitter API wrapper to grab relavent tweets"""
+
     token = ""
     def __init__(self):
         APP_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -22,6 +23,7 @@ class twitter:
     	authResponse = urllib2.urlopen(authRequest).read()
     	authJson = json.loads(authResponse)
     	self.token = authJson['access_token']
+
     def getTweets(self,input):
 
 

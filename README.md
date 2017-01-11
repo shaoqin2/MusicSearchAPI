@@ -1,4 +1,4 @@
-# Music Search API
+# Music Search API [This is only a toy project!]
 
 This is the documentation for the music search API. The backed will grab related wikipedia, spotify playlist and twitter for the user
 
